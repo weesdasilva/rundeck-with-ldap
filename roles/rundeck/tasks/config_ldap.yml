@@ -1,0 +1,22 @@
+---
+- name: Config ldap in rundeck.
+  template:
+    src: jaas-ldap.conf.j2
+    dest: /etc/rundeck/jaas-ldap.conf
+    owner: rundeck
+    group: rundeck
+    mode: 0640
+ 
+- name: habilitando parametrizacao do ldap
+  lineinfile:
+    path: /etc/sysconfig/rundeckd
+    line: 'RDECK_JVM_OPTS="-Drundeck.jaaslogin=true -Djava.security.auth.login.config=/etc/rundeck/jaas-ldap.conf -Dloginmodule.name=ldap"'
+    create: yes
+
+- name: Definindo politicas de acesso
+  template:
+    src: admin.aclpolicy.j2
+    dest: /etc/rundeck/admin.aclpolicy
+    owner: rundeck
+    group: rundeck
+    mode: 0640

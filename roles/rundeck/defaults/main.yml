@@ -1,0 +1,24 @@
+---
+# defaults file for rundeck
+framework_server_name: 'example'
+framework_server_hostname: 'example.com'
+framework_server_port: '4440'
+framework_server_url: 'http://example.com:4440'
+grails_serverURL: 'http://example.com:4440'
+
+rundeck_ldap_url: ldap://10.11.0.3:389
+rundeck_ldap_bind_user: cn=admin,dc=weesdasilva,dc=ops
+rundeck_ldap_bind_pass: 4linux
+rundeck_ldap_user_dn: ou=funcionarios,dc=weesdasilva,dc=ops
+rundeck_ldap_user_rdn_attr: uid
+rundeck_ldap_user_id_attr: uid
+rundeck_ldap_bindinglogin: true
+rundeck_ldap_user_pass_attr: userPassword
+rundeck_ldap_user_filter: inetOrgPerson
+rundeck_ldap_role_name_attr: cn
+rundeck_ldap_role_sn_attr: sn
+rundeck_ldap_role_dn: cn=rundeck,ou=grupos,dc=weesdasilva,dc=ops
+rundeck_ldap_role_username_attr: memberUid
+rundeck_ldap_role_member_attr: memberUid
+rundeck_ldap_role_gpo: posixGroup
+rundeck_ldap_role_base_name: rundeck

@@ -1,0 +1,37 @@
+---
+- name: Instalacao das Dependencias e Repositorio Rundeck
+  yum:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - vim
+    - java-1.8.0
+    - https://repo.rundeck.org/latest.rpm
+
+- name: Instalacao do Rundeck
+  yum:
+    name: rundeck
+    state: present
+
+- name: Configurando Rundeck
+  lineinfile:
+    path: "{{ item.path }}"
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+  loop:
+    - {path: '/etc/rundeck/framework.properties', regexp: '^framework.server.name', line: "framework.server.name = {{ framework_server_name }}"}
+    - {path: '/etc/rundeck/framework.properties', regexp: '^framework.server.hostname', line: "framework.server.hostname = {{framework_server_hostname}}"}
+    - {path: '/etc/rundeck/framework.properties', regexp: '^framework.server.port', line: "framework.server.port = {{framework_server_port}}"}
+    - {path: '/etc/rundeck/framework.properties', regexp: '^framework.server.url', line: "framework.server.url = {{framework_server_url}}"}
+    - {path: '/etc/rundeck/rundeck-config.properties', regexp: '^grails.server', line: "grails.serverURL= {{grails_serverURL}}"}
+
+- name: Configurando autenticação LDAP/AD.
+  import_tasks: config_ldap.yml
+
+- name: Iniciando e Habilitando o serviço do rundeck
+  systemd:
+    name: rundeckd
+    state: started
+    enabled: yes
+
+
