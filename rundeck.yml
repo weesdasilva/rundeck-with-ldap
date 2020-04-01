@@ -1,6 +1,8 @@
 ---
 - name: install rundeck in a maachine centos
   hosts: centos2
+  bacome: yes
+  user: usuario 
   vars:
     - framework_server_name: 'batata'
     - framework_server_hostname: 'batata.com'
